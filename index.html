@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CATAT - Cerdas Administrasi Toolset Alat Transmisi</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-tools"></i>
+                <h1>CATAT</h1>
+            </div>
+            <p class="tagline">Cerdas Administrasi Toolset Alat Transmisi</p>
+            <p class="region">TVRI Stasiun Kalimantan Tengah</p>
+        </header>
+
+        <main>
+            <div class="service-selection">
+                <h2>Pilih Layanan</h2>
+                <div class="service-buttons">
+                    <button id="borrowBtn" class="active">Peminjaman Barang</button>
+                    <button id="returnBtn">Pengembalian Barang</button>
+                </div>
+            </div>
+
+            <div id="borrowForm" class="form-container">
+                <h3>Form Peminjaman Barang</h3>
+                <form id="borrowingForm">
+                    <div class="form-group">
+                        <label for="fullName">Nama Lengkap (Beserta NIP, Jika ada) *</label>
+                        <input type="text" id="fullName" name="fullName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="unit">Unit/Bagian *</label>
+                        <input type="text" id="unit" name="unit" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="contact">Kontak Informasi (No HP)</label>
+                        <input type="tel" id="contact" name="contact">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tanggal & Waktu Peminjaman (Otomatis) *</label>
+                        <input type="text" id="borrowDate" name="borrowDate" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Nama Barang yang akan dipinjam *</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="item1" name="items" value="Kunci Pas Set">
+                                <label for="item1">Kunci Pas Set</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="item2" name="items" value="Kunci L">
+                                <label for="item2">Kunci L</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="item3" name="items" value="Obeng Set">
+                                <label for="item3">Obeng Set</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="item4" name="items" value="Tang Kombinasi">
+                                <label for="item4">Tang Kombinasi</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="item5" name="items" value="Kunci Inggris">
+                                <label for="item5">Kunci Inggris</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="item6" name="items" value="Kunci Sok">
+                                <label for="item6">Kunci Sok</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="item7" name="items" value="Palu">
+                                <label for="item7">Palu</label>
+                            </div>
+                            <div class="checkbox-item other-item">
+                                <input type="checkbox" id="itemOther" name="items" value="Other">
+                                <label for="itemOther">Lainnya:</label>
+                                <input type="text" id="otherItemText" name="otherItemText" placeholder="Sebutkan barang lainnya">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Kondisi Barang Saat Dipinjam *</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="conditionGood" name="condition" value="Baik" required>
+                                <label for="conditionGood">Baik</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="conditionNormal" name="condition" value="Normal">
+                                <label for="conditionNormal">Normal</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="conditionSlightDamage" name="condition" value="Rusak Ringan">
+                                <label for="conditionSlightDamage">Rusak Ringan</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="purpose">Tujuan Peminjaman *</label>
+                        <textarea id="purpose" name="purpose" required></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="submit-btn">Kirim</button>
+                        <button type="reset" class="reset-btn">Reset</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="returnForm" class="form-container" style="display: none;">
+                <h3>Form Pengembalian Barang</h3>
+                <form id="returningForm">
+                    <div class="form-group">
+                        <label for="borrowerSelect">Pilih Nama Peminjam *</label>
+                        <select id="borrowerSelect" name="borrowerSelect" required>
+                            <option value="">-- Pilih Nama Peminjam --</option>
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                    </div>
+
+                    <div id="borrowedItemsInfo" class="info-section" style="display: none;">
+                        <h4>Informasi Peminjaman</h4>
+                        <div id="borrowerDetails"></div>
+                        <div id="borrowedItems"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Kondisi Barang Saat Dikembalikan *</label>
+                        <div class="radio-group">
+                            <div class="radio-item">
+                                <input type="radio" id="returnConditionGood" name="returnCondition" value="Baik (Tidak ada kerusakan)" required>
+                                <label for="returnConditionGood">Baik (Tidak ada kerusakan)</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="returnConditionNormal" name="returnCondition" value="Normal (Sedikit aus tapi masih berfungsi)">
+                                <label for="returnConditionNormal">Normal (Sedikit aus tapi masih berfungsi)</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="returnConditionSlightDamage" name="returnCondition" value="Rusak Ringan (Ada kerusakan kecil)">
+                                <label for="returnConditionSlightDamage">Rusak Ringan (Ada kerusakan kecil)</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="returnConditionHeavyDamage" name="returnCondition" value="Rusak Berat (Tidak dapat digunakan)">
+                                <label for="returnConditionHeavyDamage">Rusak Berat (Tidak dapat digunakan)</label>
+                            </div>
+                            <div class="radio-item">
+                                <input type="radio" id="returnConditionLost" name="returnCondition" value="Hilang/Tidak Dikembalikan">
+                                <label for="returnConditionLost">Hilang/Tidak Dikembalikan</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="returnNotes">Catatan Tambahan</label>
+                        <textarea id="returnNotes" name="returnNotes"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="submit-btn">Kirim</button>
+                        <button type="reset" class="reset-btn">Reset</button>
+                    </div>
+                </form>
+            </div>
+        </main>
+
+        <div id="notification" class="notification">
+            <p id="notificationMessage"></p>
+            <button id="closeNotification"><i class="fas fa-times"></i></button>
+        </div>
+
+        <footer>
+            <p>&copy; 2023 CATAT - Cerdas Administrasi Toolset Alat Transmisi</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
